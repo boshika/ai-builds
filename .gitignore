@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Env / secrets
+.env
+.env.local
+*.env
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# macOS
+.DS_Store
+
+# IDEs
+.vscode/
+.cursor/
+.idea/
+
+# Vector DBs / local data
+chroma/
+*.db
+*.sqlite
+data/raw/
+data/processed/
+
+# Logs
+*.log
+logs/
