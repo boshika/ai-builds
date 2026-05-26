@@ -1,13 +1,73 @@
 # Build 02 — Memory Assistant
 
-A stateful conversational AI that remembers context across sessions using a persistent memory layer.
+A stateful conversational AI that remembers facts about you across sessions.
+
+## What It Does
+
+- **Short-term memory** — holds the last 10 messages in the current session
+- **Long-term memory** — extracts facts from conversations and persists them in SQLite
+- **Semantic retrieval** — uses ChromaDB to find relevant past memories for each new message
+- **No frameworks** — wired manually with the OpenAI API so every step is visible
+
+## Architecture
+
+```
+User message
+    │
+    ▼
+ChromaDB (find relevant past memories)
+    │
+    ▼
+Build prompt: system + memories + conversation history
+    │
+    ▼
+OpenAI LLM → response
+    │
+    ▼
+Extract facts (gpt-4o-mini)
+    │
+    ├── SQLite (source of truth)
+    └── ChromaDB (search index)
+```
 
 ## Concepts Covered
 
-- Stateful chat with session management
 - Short-term vs long-term memory
-- Memory storage patterns (in-memory, DB-backed)
+- Two-layer storage: relational DB + vector DB
+- LLM-based fact extraction
+- Semantic memory retrieval
 - Context window management
+
+## How to Run
+
+```bash
+cd memory-assistant
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+cp .env.example .env
+# Add your OpenAI API key to .env
+
+cd src
+python assistant.py
+```
+
+## Files
+
+| File | What it does |
+|------|-------------|
+| `src/store.py` | SQLite layer — saves and loads memories |
+| `src/retriever.py` | ChromaDB — semantic search over memories |
+| `src/memory.py` | Short-term buffer + LLM fact extraction |
+| `src/assistant.py` | Main chat loop |
+
+## What to Explore Next
+
+- Swap SQLite for Postgres
+- Add memory summarization (compress old memories)
+- Add a `/memories` command to inspect what's stored
+- Try different fact extraction prompts and compare results
 
 ## Related
 
