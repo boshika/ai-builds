@@ -50,8 +50,15 @@ cp .env.example .env
 # Add your OpenAI API key to .env
 
 cd src
+
+# Gradio web UI (recommended)
+python app.py
+
+# CLI version
 python assistant.py
 ```
+
+Open http://localhost:7860 in your browser.
 
 ## Files
 
@@ -60,7 +67,8 @@ python assistant.py
 | `src/store.py` | SQLite layer — saves and loads memories |
 | `src/retriever.py` | ChromaDB — semantic search over memories |
 | `src/memory.py` | Short-term buffer + LLM fact extraction |
-| `src/assistant.py` | Main chat loop |
+| `src/app.py` | Gradio frontend — chat UI + live memory panel |
+| `src/assistant.py` | CLI version |
 
 ## What to Explore Next
 
